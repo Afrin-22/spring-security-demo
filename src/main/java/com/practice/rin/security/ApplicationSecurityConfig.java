@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 import static com.practice.rin.security.ApplicationUserPermissions.*;
 import static com.practice.rin.security.ApplicationUserRoles.*;
@@ -30,12 +31,15 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+//                .csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+//                .and()
                 .csrf().disable()
                 .authorizeRequests()
                 // whitelist without having to specify username and password
                 .antMatchers("/", "index", "/js/*", "/css/*").permitAll()
                 //Role based authentication
                 .antMatchers("/api/**").hasRole(SE.name())
+                // no need as we use annotations in controller
 //                .antMatchers(HttpMethod.DELETE, "/manage/api/**").hasAuthority(CODE_COMMIT.getPermission())
 //                .antMatchers(HttpMethod.POST, "/manage/api/**").hasAuthority(CODE_MERGE.getPermission())
 //                .antMatchers(HttpMethod.PUT, "/manage/api/**").hasAuthority(CODE_MERGE.getPermission())
@@ -43,8 +47,11 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest()
                 .authenticated()
                 .and()
-                .httpBasic();
-
+                //basic authentication
+//                .httpBasic();
+                //for based authentication
+                .formLogin()
+                .loginPage("/login").permitAll();
 
     }
 
