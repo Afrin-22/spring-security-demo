@@ -51,7 +51,8 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .httpBasic();
                 //for based authentication
                 .formLogin()
-                .loginPage("/login").permitAll();
+                .loginPage("/login").permitAll()
+                .defaultSuccessUrl("/features", true);
 
     }
 

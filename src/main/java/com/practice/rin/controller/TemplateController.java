@@ -13,4 +13,9 @@ public class TemplateController {
     public String getLogin() {
         return "login";
     }
+
+    @GetMapping("/features")
+    public String getFeatures() {
+        return "features";
+    }
 }
