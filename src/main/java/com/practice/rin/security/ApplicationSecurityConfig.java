@@ -52,7 +52,9 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 //for based authentication
                 .formLogin()
                 .loginPage("/login").permitAll()
-                .defaultSuccessUrl("/features", true);
+                .defaultSuccessUrl("/features", true)
+                .and()
+                .rememberMe(); // default to 2 weeks
 
     }
 
